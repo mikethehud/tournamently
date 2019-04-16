@@ -8,5 +8,8 @@
   "devDependencies": {
     "lerna": "^3.13.2"
   },
-  "name": "tournamently"
+  "name": "tournamently",
+  "scripts": {
+    "watch": "yarn workspaces run watch"
+  }
 }
