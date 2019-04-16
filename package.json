@@ -1,0 +1,12 @@
+{
+  "repository": "git@github.com:mikethehud/tournamently.git",
+  "author": "mikethehud <mail@mikehudson.de>",
+  "private": true,
+  "workspaces": [
+    "packages/*"
+  ],
+  "devDependencies": {
+    "lerna": "^3.13.2"
+  },
+  "name": "tournamently"
+}
