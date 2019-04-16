@@ -6,7 +6,9 @@ services:
     ports:
       - 5432:5432
     environment:
-      POSTGRES_PASSWORD: "tournamently"
+      POSTGRES_PASSWORD: tournamently
+      POSTGRES_USER: tournamently
+      POSTGRES_DB: tournamently
     volumes:
       - postgres_data:/var/lib/postgresql/data
 
