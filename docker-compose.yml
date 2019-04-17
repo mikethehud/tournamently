@@ -3,14 +3,49 @@ services:
   db:
     image: postgres:latest
     restart: always
-    ports:
-      - 5432:5432
     environment:
       POSTGRES_PASSWORD: tournamently
       POSTGRES_USER: tournamently
       POSTGRES_DB: tournamently
     volumes:
       - postgres_data:/var/lib/postgresql/data
+  app:
+    build: ./packages/app
+    container_name: app
+    volumes:
+      - ./packages/app:/usr/app
+      - /usr/app/node_modules
+    environment:
+      - NODE_ENV=development
+      - CHOKIDAR_USEPOLLING=true
+    networks:
+      - tournamently-network
+  server:
+    build: ./packages/server
+    container_name: server
+    volumes:
+      - ./packages/server:/usr/app
+      - /usr/app/node_modules
+    environment:
+      - NODE_ENV=development
+      - CHOKIDAR_USEPOLLING=true
+    networks:
+      - tournamently-network
+  proxy:
+    image: nginx:latest
+    container_name: proxy
+    ports:
+      - 80:80
+    volumes:
+      - ./packages/proxy/nginx.conf:/etc/nginx/nginx.conf
+    depends_on:
+      - app
+    networks:
+      - tournamently-network
 
 volumes:
   postgres_data:
+
+networks:
+  tournamently-network:
+    driver: bridge
